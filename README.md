@@ -69,3 +69,5 @@ Estabilidad ante la elección del modelo: comparando al menos dos algoritmos dis
 ### Jose Fernando Vargas Zolorzano.
 ### Juan Martin Ubillus Limo.
 ### Stefhano Felipe Sinarahua Ramos.
+## BITACORIA IA
+

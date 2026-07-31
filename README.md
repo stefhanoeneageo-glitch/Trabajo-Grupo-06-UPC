@@ -93,7 +93,29 @@ Se entrenaron y compararon dos algoritmos de aprendizaje automático (`modelo_co
 **Código fuente:** [`modelo_comparacion.py`](modelo_comparacion.py)
 **Informe completo:** [`Informe_Final_Grupo06.docx`](Informe_Final_Grupo06.docx) (formato IEEE, con metodología, resultados y conclusiones detalladas).
 
-## 6.Referencias
+## 6. Implementación y Despliegue del Modelo Predictivo
+
+Para la consolidación de la etapa final del proyecto (T3), el algoritmo de mayor rendimiento empírico (Random Forest) ha sido operacionalizado mediante dos módulos ejecutables. Esta arquitectura permite la simulación de escenarios de dosificación e inferencia de resistencias sin requerir el reentrenamiento computacional del modelo.
+
+### 6.1 Módulo de Consolidación: `entrenar_modelo_final.py`
+
+Este script ejecuta el entrenamiento definitivo del algoritmo utilizando la totalidad del conjunto de datos depurado (1,005 registros). Su propósito fundamental es la persistencia de los metadatos y la parametrización del modelo para su uso en entornos de producción.
+
+* **Artefactos generados:**
+  * `modelo_random_forest.pkl`: Archivo binario que contiene el modelo predictivo serializado mediante la librería `joblib`.
+  * `rangos_entrenamiento.json`: Diccionario de control de calidad que almacena los límites físicos (valores máximos y mínimos) de cada variable independiente (features) procesada durante la fase de entrenamiento.
+
+### 6.2 Motor de Inferencia: `predecir_resistencia.py`
+
+Constituye la herramienta de estimación final. Este script carga el modelo serializado e ingesta los parámetros de diseño de una mezcla inédita (cuantías de cemento, agua, agregados, aditivos y tiempo de curado) para proyectar su comportamiento mecánico.
+
+* **Protocolo de Validación de Contornos (Boundary Check):** De forma automatizada, el algoritmo contrasta los parámetros de entrada del usuario con los límites almacenados en el archivo `.json`. Si se detecta una dosificación que excede el dominio de los datos de entrenamiento, el sistema emite una alerta de extrapolación, advirtiendo sobre la reducción en la confiabilidad de la predicción.
+* **Salida de Datos:** Retorna la estimación cuantitativa de la resistencia a la compresión expresada en Megapascales (**MPa**).
+
+> **Aviso de Cumplimiento Normativo:**
+> *Esta herramienta computacional ha sido desarrollada exclusivamente para la optimización teórica e iteración de diseños de mezcla en fase de gabinete. Bajo ninguna circunstancia exime al ingeniero responsable de ejecutar el control de calidad experimental ni reemplaza el ensayo físico normado de compresión en especímenes cilíndricos, de acuerdo con los lineamientos estipulados en la **NTP 339.034** y la **ASTM C39**.*
+
+## 7.Referencias
 1. Yeh, I-C. (1998). *Modeling of strength of high performance concrete using 
    artificial neural networks*. Cement and Concrete Research, 28(12), 1797-1808.
 2. Yeh, I-C. (2006). *Analysis of strength of concrete using design of experiments 
